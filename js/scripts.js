@@ -21,6 +21,7 @@ pokemonList = [
         types: ['psychic', 'water']
     }
 ];
+// Display all Pokemon with name and height. Add a comment for the biggest one.
 for (let i=0; i < pokemonList.length; i++) {
     if (pokemonList[i].height > 1.5) {
         document.write(`<p>${pokemonList[i].name} (height: ${pokemonList[i].height}) - Wow, that's big!`);                
