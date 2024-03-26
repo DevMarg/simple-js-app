@@ -68,6 +68,11 @@ function addListItem(pokemon) {
     addButtonEventListener(button,pokemon);
 }
 
+//Function to show details of a pokemon
+function showDetails(pokemon) {
+    console.log(pokemon);
+}
+
 return {
     add: add,
     getAll: getAll
