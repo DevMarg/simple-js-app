@@ -73,6 +73,13 @@ function showDetails(pokemon) {
     console.log(pokemon);
 }
 
+//Function to add event listener to the button
+function addButtonEventListener(button,pokemon) {
+    button.addEventListener('click', function (event){
+        showDetails(pokemon);
+    })
+}
+
 return {
     add: add,
     getAll: getAll
