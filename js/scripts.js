@@ -80,12 +80,16 @@ function addButtonEventListener(button,pokemon) {
     })
 }
 
+//Return an object containing the public methods
 return {
     add: add,
-    getAll: getAll
+    getAll: getAll,
+    addListItem: addListItem
 };
 
-}) ();
+})();  
+
+
 console.log(pokemonRepository.getAll());
 console.log(pokemonRepository.add({name: "Oddish", height: 0.5, types: ['grass', 'poison']}));
 
