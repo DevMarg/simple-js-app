@@ -35,6 +35,7 @@ function add(pokemon) {
     }        
 };
 
+//Function to get all pokemon from the repository
 function getAll() {
     return pokemonList;
 };
