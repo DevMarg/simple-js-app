@@ -23,10 +23,14 @@ let pokemonRepository = (function(){
     }
 ];
 
+//Function to add a pokemon to the repository
 function add(pokemon) {
+    //Check if the input is a valid object
     if (typeof pokemon === 'object' && pokemon !== null) {
+        //Add the pokemon to the pokemonList array
         pokemonList.push(pokemon);
     } else {
+        //Log an error message if the input is not a valid object
         console.error('Error: Invalid type. Only objects can be added to pokemonList')
     }        
 };
