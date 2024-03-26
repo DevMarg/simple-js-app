@@ -90,14 +90,7 @@ return {
 })();  
 
 
-console.log(pokemonRepository.getAll());
-console.log(pokemonRepository.add({name: "Oddish", height: 0.5, types: ['grass', 'poison']}));
-
-// Display all Pokemon with name and height. Add a comment for the biggest one.
-pokemonRepository.getAll().forEach(function(item){
-    if (item.height > 1.5) {
-        document.write("<p>" + item.name + " " + item.height +  " - Wow, that's big!" + "</p>");                
-    } else {
-        document.write("<p>" + item.name + " " + item.height + "</p>");
-    }
+// Loop through each Pokemon in the list and call addListItem to display them on the webpage
+pokemonRepository.getAll().forEach(function(pokemon){
+    pokemonRepository.addListItem(pokemon);
 });
