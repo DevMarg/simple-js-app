@@ -40,6 +40,34 @@ function getAll() {
     return pokemonList;
 };
 
+//Function to display the pokemon list on the webpage
+function addListItem(pokemon) {
+
+    //Select the unordered list element with the class 'pokemon-list'
+    let pokemonList = document.querySelector('.pokemon-list');
+
+    //Create a new list item element
+    let listItem = document.createElement('li');  
+    
+    //Create a new button element
+    let button = document.createElement('button');
+
+    //Set the button's text to the pokemon's name
+    button.innerText = pokemon.name; 
+    
+    //Add class to the button
+    button.classList.add('pokemon-button');   
+    
+    //Append the button to the list item
+    listItem.appendChild(button);
+    
+    //Append the list item to the unordered list
+    pokemonList.appendChild(listItem); 
+
+    //Call the function to add event listener
+    addButtonEventListener(button,pokemon);
+}
+
 return {
     add: add,
     getAll: getAll
