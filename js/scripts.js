@@ -1,4 +1,5 @@
 let pokemonRepository = (function(){
+    //Array to store Pokemon data
     let pokemonList = [
     {
         name: 'Fearow',
