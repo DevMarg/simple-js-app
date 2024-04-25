@@ -6,18 +6,15 @@ let pokemonRepository = (function () {
   //Define the API URL to fetch pokemon data
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
-  //Function to add a pokemon to the repository
+  //Function to add a pokemon objects to pokemonList array
   function add(pokemon) {
-    //Check if the input is valid
     if (
       typeof pokemon === "object" &&
       "name" in pokemon &&
       "detailsUrl" in pokemon
     ) {
-      //Add the pokemon to the pokemonList array
       pokemonList.push(pokemon);
     } else {
-      //Log an error message if the input is not valid
       console.error("Error: Invalid type.");
     }
   }
@@ -29,68 +26,62 @@ let pokemonRepository = (function () {
 
   //Function to display the pokemon list on the webpage
   function addListItem(pokemon) {
-    //Select the unordered list element with the class 'pokemon-list'
-    let pokemonList = document.querySelector(".pokemon-list");
+    //Select element with class 'pokemon-list' with JQuery
+    let pokemonList = $(".pokemon-list");
 
-    //Create a new list item element
-    let listItem = document.createElement("li");
+    //Create new list item  with JQuery
+    let listItem = $("<li></li>");
 
-    //Create a new button element
-    let button = document.createElement("button");
+    //Create new button displaying Pokemon name with JQuery
+    let button = $("<button>" + pokemon.name + "</button>");
 
-    //Set the button's text to the pokemon's name
-    button.innerText = pokemon.name;
+    //Add classes to the button with JQuery
+    button.addClass("btn btn-success btn-lg pokemon-button");
 
-    //Add class to the button
-    button.classList.add("btn", "btn-success", "btn-lg", "pokemon-button");
+    //Append the button to the list item and listItem to pokemon list with JQuery
+    listItem.append(button);
+    pokemonList.append(listItem);
 
-    //Append the button to the list item
-    listItem.appendChild(button);
-
-    //Append the list item to the unordered list
-    pokemonList.appendChild(listItem);
-
-    button.addEventListener("click", function (event) {
+    //Attach click event listener to the button and show the details of Pokemon with JQuery
+    button.on("click", function (event) {
       showDetails(pokemon);
     });
   }
 
-  //Function to load pokemon list from the API
+  //JQuery's AJAX request to fetch the Pokemon data from the API
   function loadList() {
-    return fetch(apiUrl)
+    return $.ajax({
+      url: apiUrl,
+      dataType: "json",
+    })
       .then(function (response) {
-        return response.json();
-      })
-      .then(function (json) {
-        json.results.forEach(function (item) {
+        response.results.forEach(function (item) {
           let pokemon = {
             name: item.name,
-            height: item.height,
             detailsUrl: item.url,
           };
           add(pokemon);
           console.log(pokemon);
         });
       })
-      .catch(function (e) {
-        console.error(e);
+      .fail(function (xhr, textStatus, errorThrown) {
+        console.error("Error", textStatus);
       });
   }
 
-  //Function to load details of a pokemon from the API
+  //JQuery's AJAX request to fetch additional Pokemon data from the API
   function loadDetails(item) {
-    let url = item.detailsUrl;
-    return fetch(url)
-      .then(function (response) {
-        return response.json();
-      })
+    return $.ajax({
+      url: item.detailsUrl,
+      dataType: "json",
+    })
       .then(function (details) {
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
         item.types = details.types;
       })
-      .catch(function (e) {
-        console.error(e);
+      .fail(function (xhr, textStatus, errorThrown) {
+        console.error("Error", textStatus);
       });
   }
 
@@ -101,29 +92,59 @@ let pokemonRepository = (function () {
     });
   }
 
-  //Function to display modal with pokemon details
+  //Function to display modal with Pokemon details
   function showModal(pokemon) {
-    // Select the modal content elements
-    let modalImage = document.querySelector(".modal-image");
-    let modalName = document.querySelector(".modal-name");
-    let modalHeight = document.querySelector(".modal-height");
-    let modalAbilities = document.querySelector(".modal-abilities");
+    // Select the modal elements with JQuery
+    let modalImage = $(".modal-image");
+    let modalName = $(".modal-name");
+    let modalHeight = $(".modal-height");
+    let modalAbilities = $(".modal-abilities");
 
-    modalImage.src = pokemon.imageUrl;
-    modalImage.alt = pokemon.name;
-    modalName.innerText = pokemon.name;
-    modalHeight.innerText = "Height: " + pokemon.height;
+    //Set attributes and text with JQuery
+    modalImage.attr("src", pokemon.imageUrl);
+    modalImage.attr("alt", pokemon.name);
+    modalName.text(pokemon.name);
+    modalHeight.text("Height: " + pokemon.height);
 
-    //Extract type names from the pokemon's types array
+    //Map through the types of the Pokemon, extract their names, and join them with a comma
     let typeNames = pokemon.types.map((type) => type.type.name).join(", ");
-    modalAbilities.innerText = "Type: " + typeNames;
 
-    // Show the modal by triggering Bootstrap modal's show method
-    let modal = new bootstrap.Modal(document.getElementById("pokemonModal"), {});
-    modal.show();
+    //Set the text of modalAbilities element to display the types of Pokemon
+    modalAbilities.text("Type: " + typeNames);
+
+    //Show modal with JQuery
+    $("#pokemonModal").modal("show");
   }
 
-  //Return an object containing the public methods
+  //Function to search by Pokemon's name
+  function searchBar() {
+    let $searchBar = $("#search-bar");
+
+    //Event listener for search bar's input
+    $searchBar.on("input", function () {
+      let searchValue = $searchBar.val().toLowerCase();
+      let filteredPokemon = pokemonList.filter((pokemon) =>
+        pokemon.name.toLowerCase().startsWith(searchValue)
+      );
+
+      // Clear the Pokemon list
+      let $pokemonListElement = $(".row");
+      $pokemonListElement.empty();
+
+      //No results message if nothing is found. Display Pokemon if available
+      if (filteredPokemon.length === 0) {
+        let message = "No results";
+        $pokemonListElement.text(`\n\n\n\n\n\n${message}`);
+      } else {
+        filteredPokemon.forEach((pokemon) => {
+          addListItem(pokemon);
+        });
+      }
+    });
+  }
+  searchBar();
+
+  // Return an object containing the public methods
   return {
     add: add,
     getAll: getAll,
