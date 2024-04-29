@@ -6,6 +6,11 @@ let pokemonRepository = (function () {
   //Define the API URL to fetch pokemon data
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
+  //Function to capitalize the first letter
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   //Function to add a pokemon objects to pokemonList array
   function add(pokemon) {
     if (
@@ -22,30 +27,6 @@ let pokemonRepository = (function () {
   //Function to get all pokemon from the repository
   function getAll() {
     return pokemonList;
-  }
-
-  //Function to display the pokemon list on the webpage
-  function addListItem(pokemon) {
-    //Select element with class 'pokemon-list' with JQuery
-    let pokemonList = $(".pokemon-list");
-
-    //Create new list item  with JQuery
-    let listItem = $("<li></li>");
-
-    //Create new button displaying Pokemon name with JQuery
-    let button = $("<button>" + pokemon.name + "</button>");
-
-    //Add classes to the button with JQuery
-    button.addClass("btn btn-success btn-lg pokemon-button");
-
-    //Append the button to the list item and listItem to pokemon list with JQuery
-    listItem.append(button);
-    pokemonList.append(listItem);
-
-    //Attach click event listener to the button and show the details of Pokemon with JQuery
-    button.on("click", function (event) {
-      showDetails(pokemon);
-    });
   }
 
   //JQuery's AJAX request to fetch the Pokemon data from the API
@@ -92,6 +73,53 @@ let pokemonRepository = (function () {
     });
   }
 
+  //Function to display the pokemon list on the webpage
+  function addListItem(pokemon) {
+    //Select element with class 'pokemon-list' with JQuery
+    let pokemonList = $(".pokemon-list");
+
+    //Create new list item  with JQuery
+    let listItem = $("<li></li>");
+
+    //Create new button displaying Pokemon name with JQuery
+    let button = $("<button>" + capitalizeFirstLetter(pokemon.name) + "</button>");
+
+    //Add classes to the button with JQuery
+    button.addClass("btn btn-lg pokemon-button");
+
+    // Fetch the image URL if it's not already available
+    if (!pokemon.imageUrl) {
+      loadDetails(pokemon).then(function () {
+        // After loading details, update the button with the image
+        let image = $("<img>");
+        image.addClass("pokemon-image img-fluid");
+        image.attr("src", pokemon.imageUrl);
+        image.attr("alt", `Image of ${pokemon.name}`);
+        button.append(image);
+        
+
+      });
+    } else {
+      // If the image URL is already available, create the image element immediately
+      let image = $("<img>");
+      image.addClass("pokemon-image img-fluid");
+      image.attr("src", pokemon.imageUrl);
+      image.attr("alt", `Image of ${pokemon.name}`);
+      button.append(image);
+      
+
+    }
+
+    //Append the button to the list item and listItem to pokemon list with JQuery
+    listItem.append(button);
+    pokemonList.append(listItem);
+
+    //Attach click event listener to the button and show the details of Pokemon with JQuery
+    button.on("click", function (event) {
+      showDetails(pokemon);
+    });
+  }
+
   //Function to display modal with Pokemon details
   function showModal(pokemon) {
     // Select the modal elements with JQuery
@@ -103,7 +131,7 @@ let pokemonRepository = (function () {
     //Set attributes and text with JQuery
     modalImage.attr("src", pokemon.imageUrl);
     modalImage.attr("alt", pokemon.name);
-    modalName.text(pokemon.name);
+    modalName.text(capitalizeFirstLetter(pokemon.name));
     modalHeight.text("Height: " + pokemon.height);
 
     //Map through the types of the Pokemon, extract their names, and join them with a comma
