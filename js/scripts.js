@@ -106,8 +106,6 @@ let pokemonRepository = (function () {
       image.attr("src", pokemon.imageUrl);
       image.attr("alt", `Image of ${pokemon.name}`);
       button.append(image);
-      
-
     }
 
     //Append the button to the list item and listItem to pokemon list with JQuery
