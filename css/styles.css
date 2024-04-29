@@ -90,7 +90,7 @@ html {
   .pokemon-button {
     width: 200px; 
       height: 200px;  
-    background-image: url("./images/pokeball.png");
+    background-image: url("../images/pokeball.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;  
@@ -120,7 +120,7 @@ html {
   }
   
   .modal-content {
-    background-image: url("./images/modal-background.webp");
+    background-image: url("../images/modal-background.webp");
     border-radius: 10px; 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
     padding: 20px; 

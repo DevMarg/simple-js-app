@@ -11,20 +11,21 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee">
     <link rel="stylesheet" href="./css/styles.css" type="text/css" />
   </head>
 
   <body>
+
     
-    <div class="p-3 mb-2 bg-dark-subtle text-dark-emphasis">
       <nav
-        class="navbar navbar-expand-lg fixed-top bg-body-tertiary"
+        class="navbar navbar-expand-lg bg-body-tertiary"
         data-bs-theme="dark"
       >
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index-playground.html">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/5/51/Pokebola-pokeball-png-0.png"
               width="50"
@@ -47,20 +48,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Info</a>
-              </li>
+                <a class="nav-link active" aria-current="page" href="#"></a>
+              </li>              
             </ul>
             <form class="d-flex" role="search">
               <input
                 class="form-control me-2"
-                type="search"
-                placeholder="Search"
+                type="search"                
                 aria-label="Search"
                 id="search-bar"
               />
@@ -71,12 +65,15 @@
           </div>
         </div>
       </nav>
+      <span class="line-load"></span>
 
-      <div class="container">
+      <div class="pokemon-container ">
         <ul class="pokemon-list row"></ul>
       </div>
 
       <!-- Bootstrap Modal -->
+     <div class="modal-container">
+
       <div
         class="modal fade"
         id="pokemonModal"
@@ -93,11 +90,12 @@
               </h5>
             </div>
             <div class="modal-body">
-              <img src="#" class="modal-image img-fluid" alt="Pokemon Image" />
+              <div class="modal-image-container">
+                <img src="#" class="modal-image img-fluid" alt="Pokemon Image" />
+              </div>              
               <p class="modal-image"></p>
               <p class="modal-name"></p>
-              <p class="modal-height"></p>
-              <p class="modal-abilities"></p>
+              <p class="modal-height"></p>              
             </div>
             <div class="modal-footer">
               <button
@@ -111,8 +109,14 @@
           </div>
         </div>
       </div>
-    </div>
+      
+     </div>
+      
+    
+    
 
+
+    <!--JS: JQuery, Popper, and Bootstrap-->
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
