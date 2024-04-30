@@ -1,10 +1,13 @@
+/*global $*/
+
+
 //Define pokemonRepository as an Immediately Invoked Function Expression (IIFE)
 let pokemonRepository = (function () {
   //Initialize an empty array to store pokemon data
   let pokemonList = [];
 
   //Define the API URL to fetch pokemon data
-  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
   //Function to capitalize the first letter
   function capitalizeFirstLetter(string) {
@@ -14,13 +17,13 @@ let pokemonRepository = (function () {
   //Function to add a pokemon objects to pokemonList array
   function add(pokemon) {
     if (
-      typeof pokemon === "object" &&
-      "name" in pokemon &&
-      "detailsUrl" in pokemon
+      typeof pokemon === 'object' &&
+      'name' in pokemon &&
+      'detailsUrl' in pokemon
     ) {
       pokemonList.push(pokemon);
     } else {
-      console.error("Error: Invalid type.");
+      console.error('Error: Invalid type.');
     }
   }
 
@@ -33,7 +36,7 @@ let pokemonRepository = (function () {
   function loadList() {
     return $.ajax({
       url: apiUrl,
-      dataType: "json",
+      dataType: 'json',
     })
       .then(function (response) {
         response.results.forEach(function (item) {
@@ -45,8 +48,8 @@ let pokemonRepository = (function () {
           console.log(pokemon);
         });
       })
-      .fail(function (xhr, textStatus, errorThrown) {
-        console.error("Error", textStatus);
+      .fail(function (xhr, textStatus) {
+        console.error('Error', textStatus);
       });
   }
 
@@ -54,15 +57,15 @@ let pokemonRepository = (function () {
   function loadDetails(item) {
     return $.ajax({
       url: item.detailsUrl,
-      dataType: "json",
+      dataType: 'json',
     })
       .then(function (details) {
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
         item.types = details.types;
       })
-      .fail(function (xhr, textStatus, errorThrown) {
-        console.error("Error", textStatus);
+      .fail(function (xhr, textStatus) {
+        console.error('Error', textStatus);
       });
   }
 
@@ -76,35 +79,35 @@ let pokemonRepository = (function () {
   //Function to display the pokemon list on the webpage
   function addListItem(pokemon) {
     //Select element with class 'pokemon-list' with JQuery
-    let pokemonList = $(".pokemon-list");
+    let pokemonList = $('.pokemon-list');
 
     //Create new list item  with JQuery
-    let listItem = $("<li></li>");
+    let listItem = $('<li></li>');
 
     //Create new button displaying Pokemon name with JQuery
-    let button = $("<button>" + capitalizeFirstLetter(pokemon.name) + "</button>");
+    let button = $('<button>' + capitalizeFirstLetter(pokemon.name) + '</button>');
 
     //Add classes to the button with JQuery
-    button.addClass("btn btn-lg pokemon-button");
+    button.addClass('btn btn-lg pokemon-button');
 
     // Fetch the image URL if it's not already available
     if (!pokemon.imageUrl) {
       loadDetails(pokemon).then(function () {
         // After loading details, update the button with the image
-        let image = $("<img>");
-        image.addClass("pokemon-image img-fluid");
-        image.attr("src", pokemon.imageUrl);
-        image.attr("alt", `Image of ${pokemon.name}`);
+        let image = $('<img>');
+        image.addClass('pokemon-image img-fluid');
+        image.attr('src', pokemon.imageUrl);
+        image.attr('alt', `Image of ${pokemon.name}`);
         button.append(image);
         
 
       });
     } else {
       // If the image URL is already available, create the image element immediately
-      let image = $("<img>");
-      image.addClass("pokemon-image img-fluid");
-      image.attr("src", pokemon.imageUrl);
-      image.attr("alt", `Image of ${pokemon.name}`);
+      let image = $('<img>');
+      image.addClass('pokemon-image img-fluid');
+      image.attr('src', pokemon.imageUrl);
+      image.attr('alt', `Image of ${pokemon.name}`);
       button.append(image);
     }
 
@@ -113,7 +116,7 @@ let pokemonRepository = (function () {
     pokemonList.append(listItem);
 
     //Attach click event listener to the button and show the details of Pokemon with JQuery
-    button.on("click", function (event) {
+    button.on('click', function () {
       showDetails(pokemon);
     });
   }
@@ -121,45 +124,45 @@ let pokemonRepository = (function () {
   //Function to display modal with Pokemon details
   function showModal(pokemon) {
     // Select the modal elements with JQuery
-    let modalImage = $(".modal-image");
-    let modalName = $(".modal-name");
-    let modalHeight = $(".modal-height");
-    let modalAbilities = $(".modal-abilities");
+    let modalImage = $('.modal-image');
+    let modalName = $('.modal-name');
+    let modalHeight = $('.modal-height');
+    let modalAbilities = $('.modal-abilities');
 
     //Set attributes and text with JQuery
-    modalImage.attr("src", pokemon.imageUrl);
-    modalImage.attr("alt", pokemon.name);
+    modalImage.attr('src', pokemon.imageUrl);
+    modalImage.attr('alt', pokemon.name);
     modalName.text(capitalizeFirstLetter(pokemon.name));
-    modalHeight.text("Height: " + pokemon.height);
+    modalHeight.text('Height: ' + pokemon.height);
 
     //Map through the types of the Pokemon, extract their names, and join them with a comma
-    let typeNames = pokemon.types.map((type) => type.type.name).join(", ");
+    let typeNames = pokemon.types.map((type) => type.type.name).join(', ');
 
     //Set the text of modalAbilities element to display the types of Pokemon
-    modalAbilities.text("Type: " + typeNames);
+    modalAbilities.text('Type: ' + typeNames);
 
     //Show modal with JQuery
-    $("#pokemonModal").modal("show");
+    $('#pokemonModal').modal('show');
   }
 
   //Function to search by Pokemon's name
   function searchBar() {
-    let $searchBar = $("#search-bar");
+    let $searchBar = $('#search-bar');
 
     //Event listener for search bar's input
-    $searchBar.on("input", function () {
+    $searchBar.on('input', function () {
       let searchValue = $searchBar.val().toLowerCase();
       let filteredPokemon = pokemonList.filter((pokemon) =>
         pokemon.name.toLowerCase().startsWith(searchValue)
       );
 
       // Clear the Pokemon list
-      let $pokemonListElement = $(".row");
+      let $pokemonListElement = $('.row');
       $pokemonListElement.empty();
 
       //No results message if nothing is found. Display Pokemon if available
       if (filteredPokemon.length === 0) {
-        let message = "No results";
+        let message = 'No results';
         $pokemonListElement.text(`\n\n\n\n\n\n${message}`);
       } else {
         filteredPokemon.forEach((pokemon) => {
