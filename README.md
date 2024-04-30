@@ -1,6 +1,6 @@
 # Pokedex: A Simple JavaScript Application
 
-This is a web application that serves as a Pokedex, allowing users to explore Pokemon data fetched from an external API. It's built using HTML, CSS, and JavaScript.
+This project is a web-based Pokedex application that fetches and displays data from the PokeAPI.  It's built using HTML, CSS, and JavaScript.
 
 
 ## Key Features
@@ -11,7 +11,7 @@ This is a web application that serves as a Pokedex, allowing users to explore Po
 
 
 ## How to use
-Open the index.html file in your web browser to access the application. You'll see a list of Pokemon. Click on a Pokemon's name to view more detailed information about it.
+Open the `index.html` file in your web browser to access the application. You'll see a list of Pokemon. Click on a Pokemon's name to view more detailed information about it.
 
 ## Technologies and Dependencies
 This project utilizes various modern web development technologies and dependencies to ensure a smooth and user-friendly experience.
