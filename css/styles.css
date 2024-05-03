@@ -1,6 +1,6 @@
 html {
   -webkit-box-shadow: inset 0px 0px 50px #777;
-          box-shadow: inset 0px 0px 50px #777;
+          box-shadow: inset 0px 0px 50px #777;  
 }
 
 body {
@@ -8,6 +8,7 @@ body {
           box-sizing: border-box;  
   background-color: #151515;
   font-family: "Source Code Pro";
+  overflow-x: hidden;
 }
 
 ::-moz-selection {
@@ -138,9 +139,9 @@ ul.pokemon-list.row {
 }
 
 .pokemon-button {
-  width: 200px; 
-    height: 200px;  
-  background-image: url("../images/pokeball.png");
+  width: 200px;   
+  aspect-ratio: 1 / 1;    
+  background-image: url("./images/pokeball.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;  
@@ -163,6 +164,13 @@ ul.pokemon-list.row {
   text-shadow:  0 0 5px #ccffeb;
 }
 
+.pokemon-image {
+  height: 100px;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+
 
 .modal-container {  
   display: -webkit-box;  
@@ -173,12 +181,11 @@ ul.pokemon-list.row {
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center;
-  height: 100vh; 
+          align-items: center;  
 }
 
 .modal-content {
-  background-image: url("../images/modal-background.webp");
+  background-image: url("./images/modal-background.webp");
   border-radius: 10px; 
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
@@ -217,24 +224,11 @@ ul.pokemon-list.row {
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center;
+          align-items: center;  
 }
 
 .modal-image {
-  width: 80%;
-  max-height: 200px;
+  width: 200px;
+  aspect-ratio: 1 / 1;
   
-}
-
-/* Responsive styling for big devices */
-@media all and (min-width: 1440px) {
-  .pokemon-button {
-    min-width: 300px;
-  }
-}
-
-@media all and (min-width: 2560px) {
-  .pokemon-button {
-    min-width: 500px;
-  }
 }
